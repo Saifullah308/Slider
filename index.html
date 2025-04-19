@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AF Jewels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+        }
+
+        /* Hero Slider */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            overflow: hidden;
+        }
+
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .slider-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        #prevBtn {
+            left: 20px;
+        }
+
+        #nextBtn {
+            right: 20px;
+        }
+
+        @media (max-width: 576px) {
+            .slider-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <section class="slider-container">
+            <div class="slider">
+                <div class="slide" style="background-image: url('https://i.postimg.cc/GtN0yNck/square-1-1-1744793908059.png')"></div>
+                <div class="slide" style="background-image: url('https://i.postimg.cc/QCVGVsr8/landscape-3-2-1744290804943.png')"></div>
+                <div class="slide" style="background-image: url('https://i.postimg.cc/tRmGw1hY/landscape-3-2-1744290600229.png')"></div>
+                <div class="slide" style="background-image: url('https://i.postimg.cc/B6SG9HY1/landscape-3-2-1744290880180.png')"></div>
+                <div class="slide" style="background-image: url('https://i.postimg.cc/dtpvk71z/landscape-3-2-1744291358967.png')"></div>
+                <div class="slide" style="background-image: url('https://i.postimg.cc/Xvc0zQ8b/landscape-3-2-1744291317861.png')"></div>
+                <div class="slide" style="background-image: url('https://i.postimg.cc/L8PSzHgh/landscape-3-2-1744291260934.png')"></div>
+            </div>
+
+            <button class="slider-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </section>
+    </main>
+    <script>
+        // Image Slider
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+        let slideInterval;
+
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateSlider();
+        }
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Auto slide change every 3 seconds
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 3000);
+        }
+
+        // Pause slideshow when hovering over slider
+        slider.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+
+        slider.addEventListener('mouseleave', startSlideShow);
+        
+        // Initialize
+        startSlideShow();
+    </script>
+</body>
+
+</html>
